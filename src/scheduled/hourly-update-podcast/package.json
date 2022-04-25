@@ -1,0 +1,19 @@
+{
+  "name": "hourly-update-podcast",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@architect/functions": "^5.0.5",
+    "axios": "^0.26.1",
+    "html-to-text": "^8.2.0",
+    "lunr": "^2.3.9",
+    "node-gzip": "^1.1.2",
+    "podparse": "^1.5.1"
+  }
+}
