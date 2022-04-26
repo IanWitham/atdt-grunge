@@ -1,5 +1,5 @@
 module.exports = {
-  darkMode: "media",
+  darkMode: "class",
   content: ["./app/**/*.{ts,tsx,jsx,js}"],
   theme: {
     extend: {
@@ -23,7 +23,7 @@ module.exports = {
         },
       },
       animation: {
-        buzz: "buzz 0.01s infinite alternate ease",
+        buzz: "buzz 0.1s infinite alternate ease",
         bulb: "march 1s infinite",
       },
     },

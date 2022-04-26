@@ -15,6 +15,7 @@ import { json, LoaderFunction } from "@remix-run/server-runtime";
 import dayjs from "dayjs";
 import lunr from "lunr";
 import React, { FormEventHandler, useRef } from "react";
+import { Theme, useTheme } from "~/utils/theme-provider";
 
 type LoaderData = {
   searchResult: lunr.Index.Result[];
@@ -40,20 +41,55 @@ export default function Index() {
   const search = searchParams.get("search");
   const location = useLocation();
   const searchInput = useRef<HTMLInputElement>(null);
+  const [theme, setTheme] = useTheme();
 
   const reselectText: FormEventHandler = (x) => {
     searchInput.current?.setSelectionRange(0, searchInput.current.value.length);
   };
 
+  const toggleTheme = () => {
+    setTheme((prevTheme) =>
+      prevTheme == Theme.LIGHT ? Theme.DARK : Theme.LIGHT
+    );
+  };
+
   return (
     <main className="flex flex-row max-h-screen min-h-screen bg-gradient-to-t from-slate-300 to-slate-500 dark:from-slate-700 dark:via-slate-900 dark:to-black">
       <menu className="absolute flex flex-row items-center gap-2 top-4 right-4">
+        <button
+          className="relative w-5 h-5 group"
+          title="Toggle theme"
+          onClick={toggleTheme}
+        >
+          {/* sun */}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="absolute top-0 left-0 w-5 h-5 text-white transition-opacity duration-500 opacity-0 dark:opacity-40 dark:group-hover:opacity-100"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path
+              fillRule="evenodd"
+              d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z"
+              clipRule="evenodd"
+            />
+          </svg>
+          {/* moon */}
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="absolute top-0 left-0 w-5 h-5 text-white transition-opacity duration-500 opacity-40 hover:opacity-100 dark:opacity-0 hover:dark:opacity-0"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+          </svg>
+        </button>
         <a title="Find us on Twitter" href="https://twitter.com/drivethrupod">
           <svg
             width="20"
             height="20"
             fill="currentColor"
-            className="text-white opacity-40 hover:opacity-100"
+            className="text-white transition-opacity duration-500 opacity-40 hover:opacity-100"
           >
             <path d="M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0020 3.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 010 16.407a11.616 11.616 0 006.29 1.84"></path>
           </svg>
@@ -62,7 +98,7 @@ export default function Index() {
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="currentColor"
-            className="w-5 h-5 text-white opacity-40 hover:opacity-100"
+            className="w-5 h-5 text-white transition-opacity duration-500 opacity-40 hover:opacity-100"
             viewBox="0 0 512 512"
           >
             <path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z" />
@@ -71,7 +107,7 @@ export default function Index() {
         <a title="Email us" href="mailto:theegonomistnz@gmail.com">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="w-5 h-5 text-white opacity-40 hover:opacity-100"
+            className="w-5 h-5 text-white transition-opacity duration-500 opacity-40 hover:opacity-100"
             viewBox="0 0 20 20"
             fill="currentColor"
           >
@@ -85,7 +121,7 @@ export default function Index() {
         >
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="w-5 h-5 text-white opacity-40 hover:opacity-100"
+            className="w-5 h-5 text-white transition-opacity duration-500 opacity-40 hover:opacity-100"
             viewBox="0 0 448 512"
             fill="currentColor"
           >
@@ -95,7 +131,7 @@ export default function Index() {
         <a title="RSS" href="http://atthedrivethru.co.nz/rss">
           <svg
             xmlns="http://www.w3.org/2000/svg"
-            className="w-5 h-5 text-white opacity-40 hover:opacity-100"
+            className="w-5 h-5 text-white transition-opacity duration-500 opacity-40 hover:opacity-100"
             viewBox="0 0 20 20"
             fill="currentColor"
           >
@@ -104,7 +140,7 @@ export default function Index() {
           </svg>
         </a>
         <Link
-          className="text-lg text-white font-inter opacity-40 hover:opacity-100"
+          className="text-lg text-white transition-opacity duration-500 font-inter opacity-40 hover:opacity-100"
           to="/about"
         >
           About
@@ -150,7 +186,7 @@ export default function Index() {
                     name="search"
                     defaultValue={search ?? ""}
                     placeholder="Search"
-                    type="text"
+                    type="search"
                     className="w-full px-10 py-2 bg-transparent border rounded-full border-slate-800 font-inter text-slate-800 dark:border-slate-200 dark:text-slate-200"
                   />
                 </Form>
