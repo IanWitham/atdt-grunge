@@ -140,12 +140,17 @@ jobs:
       - name: 🛠 Install Arc
         run: npm i -g @architect/architect
 
+      - name: 🌳 Environment Variables
+        run: |
+          arc env --add --env production ARC_APP_SECRET ${{ secrets.PRODUCTION_ARC_APP_SECRET }}
+          arc env --add --env production SESSION_SECRET ${{ secrets.PRODUCTION_SESSION_SECRET }}
+          arc env --add --env staging ARC_APP_SECRET ${{ secrets.STAGING_ARC_APP_SECRET }}
+          arc env --add --env staging SESSION_SECRET ${{ secrets.STAGING_SESSION_SECRET }}
+
       - name: 🚀 Staging Deploy
         if: github.ref == 'refs/heads/dev'
         run: arc deploy --staging --prune
         env:
-          SESSION_SECRET: ${{ secrets.STAGING_SESSION_SECRET }}
-          ARC_APP_SECRET: ${{ secrets.STAGING_ARC_APP_SECRET }}
           CI: true
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
@@ -154,8 +159,6 @@ jobs:
         if: github.ref == 'refs/heads/main'
         run: arc deploy --production --prune
         env:
-          SESSION_SECRET: ${{ secrets.PROD_SESSION_SECRET }}
-          ARC_APP_SECRET: ${{ secrets.PROD_ARC_APP_SECRET }}
           CI: true
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
