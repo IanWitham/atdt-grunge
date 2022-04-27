@@ -1,6 +1,6 @@
-import { useMatches, useParams } from "@remix-run/react";
-import { HeadersFunction, LoaderFunction } from "@remix-run/server-runtime";
-import lunr from "lunr";
+import { useMatches } from "@remix-run/react";
+import type { HeadersFunction } from "@remix-run/server-runtime";
+import type lunr from "lunr";
 import EpisodeComponent from "~/components/episode";
 
 export const headers: HeadersFunction = () => {
@@ -13,9 +13,6 @@ export default function Index() {
   const matches = useMatches();
   const routeData = matches[1].data;
   const { topResult, searchResult } = routeData;
-
-  console.log(searchResult);
-
   const keywords = topResult
     ? Object.keys((searchResult as lunr.Index.Result[])[0].matchData.metadata)
     : [];

@@ -34,7 +34,7 @@ export async function getEpisode(id : string) {
     const db = await arc.tables();
     const result = await await db.podcast.get({pk: id});
     if (result) {
-        return result.body as Episode;
+        return (result.body as Episode);
     }
     return null;
 }

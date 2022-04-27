@@ -1,4 +1,5 @@
-import { Episode } from "podparse";
+import type { Episode } from "podparse";
+import { useEffect, useState } from "react";
 
 type Params = {
   episode: Episode;
@@ -14,6 +15,19 @@ const markMatches = (str: string, matchedWords: string[]) =>
     : str;
 
 export default function EpisodeComponent({ episode, keywords }: Params) {
+  const [shareData, setShareDate] = useState<ShareData | undefined>();
+
+  useEffect(() => {
+    const sd: ShareData = {
+      url: episode.link,
+      title: "At the Drive True " + episode.title,
+      text: episode.summary,
+    };
+    if (navigator.canShare && navigator.canShare(sd)) {
+      setShareDate(sd);
+    }
+  }, []);
+
   return (
     <>
       <h1
@@ -55,20 +69,21 @@ export default function EpisodeComponent({ episode, keywords }: Params) {
           />
         </svg>
 
-        <svg
-          xmlns="http://www.w3.org/2000/svg"
-          className="w-8 h-8 transition-opacity duration-500 text-slate-900 opacity-60 hover:opacity-100 dark:text-slate-200"
-          viewBox="0 0 20 20"
-          fill="currentColor"
-        >
-          <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" />
-        </svg>
+        {shareData && (
+          <svg
+            onClick={() => navigator.share(shareData)}
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-8 h-8 transition-opacity duration-500 text-slate-900 opacity-60 hover:opacity-100 dark:text-slate-200"
+            viewBox="0 0 20 20"
+            fill="currentColor"
+          >
+            <path d="M15 8a3 3 0 10-2.977-2.63l-4.94 2.47a3 3 0 100 4.319l4.94 2.47a3 3 0 10.895-1.789l-4.94-2.47a3.027 3.027 0 000-.74l4.94-2.47C13.456 7.68 14.19 8 15 8z" />
+          </svg>
+        )}
       </div>
+
       <div
         className="prose-sm prose prose-slate font-inter dark:prose-invert"
-        // dangerouslySetInnerHTML={{
-        //   __html: markMatches(episode.description, keywords),
-        // }}
         dangerouslySetInnerHTML={{
           __html: markMatches(episode.description, keywords),
         }}
