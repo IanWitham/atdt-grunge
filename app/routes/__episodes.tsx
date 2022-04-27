@@ -7,14 +7,15 @@ import {
   useSearchParams,
 } from "@remix-run/react";
 
-import { useOptionalUser } from "~/utils";
-
 import Sign from "~/sign2";
-import { getEpisodes, ShowListItem } from "~/models/show.server";
-import { json, LoaderFunction } from "@remix-run/server-runtime";
+import type { ShowListItem } from "~/models/show.server";
+import { getEpisodes } from "~/models/show.server";
+import type { LoaderFunction } from "@remix-run/server-runtime";
+import { json } from "@remix-run/server-runtime";
 import dayjs from "dayjs";
-import lunr from "lunr";
-import React, { FormEventHandler, useRef } from "react";
+import type lunr from "lunr";
+import type { FormEventHandler } from "react";
+import React, { useRef } from "react";
 import { Theme, useTheme } from "~/utils/theme-provider";
 
 type LoaderData = {
@@ -23,8 +24,6 @@ type LoaderData = {
 };
 
 export const loader: LoaderFunction = async ({ request, params }) => {
-  //const userId = await requireUserId(request);
-  //invariant(params.noteId, "noteId not found");
   const url = new URL(request.url);
   const search = url.searchParams.get("search");
   const result = await getEpisodes(search ?? "");
@@ -41,7 +40,7 @@ export default function Index() {
   const search = searchParams.get("search");
   const location = useLocation();
   const searchInput = useRef<HTMLInputElement>(null);
-  const [theme, setTheme] = useTheme();
+  const [, setTheme] = useTheme();
 
   const reselectText: FormEventHandler = (x) => {
     searchInput.current?.setSelectionRange(0, searchInput.current.value.length);
