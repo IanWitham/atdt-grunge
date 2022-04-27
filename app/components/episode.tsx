@@ -26,7 +26,7 @@ export default function EpisodeComponent({ episode, keywords }: Params) {
     if (navigator.canShare && navigator.canShare(sd)) {
       setShareDate(sd);
     }
-  }, []);
+  }, [episode.link, episode.summary, episode.title]);
 
   return (
     <>

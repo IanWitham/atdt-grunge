@@ -1,6 +1,6 @@
 
 import arc from "@architect/functions";
-import { Episode, Podcast } from "podparse";
+import type { Episode, Podcast } from "podparse";
 import {ungzip} from 'node-gzip';
 import lunr from 'lunr';
 

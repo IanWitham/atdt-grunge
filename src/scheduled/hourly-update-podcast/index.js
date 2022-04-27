@@ -49,8 +49,8 @@ exports.handler = async function scheduled(event) {
   // build a lunr index
   const index = lunr((config) => {
     config.ref("slug");
-    config.field("title");
-    config.field("description");
+    config.field("title", { boost: 2 });
+    config.field("description", { boost: 1 });
     podcast.episodes.forEach((x) => {
       const item = {
         slug: getSlug(x.link),

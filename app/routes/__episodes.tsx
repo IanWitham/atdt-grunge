@@ -185,7 +185,8 @@ export default function Index() {
                     name="search"
                     defaultValue={search ?? ""}
                     placeholder="Search"
-                    type="search"
+                    inputMode="search"
+                    type="text"
                     className="w-full px-10 py-2 bg-transparent border rounded-full border-slate-800 font-inter text-slate-800 dark:border-slate-200 dark:text-slate-200"
                   />
                 </Form>
@@ -203,7 +204,12 @@ export default function Index() {
                   />
                 </svg>
 
-                <Form className="absolute top-0 bottom-0 right-0 w-5 h-5 my-auto mr-5 text-slate-800 dark:text-slate-200">
+                <Form
+                  onSubmit={() =>
+                    searchInput?.current && (searchInput.current.value = "")
+                  }
+                  className="absolute top-0 bottom-0 right-0 w-5 h-5 my-auto mr-5 text-slate-800 dark:text-slate-200"
+                >
                   <button
                     title="Clear Search"
                     type="submit"
