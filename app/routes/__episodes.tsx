@@ -69,7 +69,7 @@ export default function Index() {
   const progressMinutes = Math.floor((progress / 60) % 60)
     .toString()
     .padStart(2, "0");
-  const progressHours = Math.floor((duration / 3600) % 60).toString();
+  const progressHours = Math.floor((progress / 3600) % 60).toString();
   const formattedProgress = `${progressHours}:${progressMinutes}:${progressSeconds}`;
 
   const play = (episode: Episode) => {
