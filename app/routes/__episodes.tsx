@@ -55,10 +55,6 @@ export default function Index() {
   const [progress, setProgress] = useState<number>(0);
   const [duration, setDuration] = useState<number>(0);
 
-  useEffect(() => {
-    reactPlayerRef.current?.seekTo(progress);
-  }, [progress]);
-
   const durationSeconds = Math.floor(duration % 60)
     .toString()
     .padStart(2, "0");
@@ -248,7 +244,9 @@ export default function Index() {
                 )}
 
                 <input
-                  onChange={(e) => setProgress(parseFloat(e.target.value))}
+                  onChange={(e) =>
+                    reactPlayerRef.current?.seekTo(parseFloat(e.target.value))
+                  }
                   min={0}
                   max={reactPlayerRef.current?.getDuration()}
                   value={progress}
