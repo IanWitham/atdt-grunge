@@ -40,7 +40,7 @@ export const links: LinksFunction = () => {
     },
     {
       rel: "stylesheet",
-      href: "https://fonts.googleapis.com/css2?family=Bangers&family=Inter&family=Sacramento&display=swap",
+      href: "https://fonts.googleapis.com/css2?family=Bangers&family=Inter&family=Sacramento&family=Space+Mono&display=swap",
     },
   ];
 };
@@ -83,9 +83,7 @@ function App() {
 export default function AppWithThemeProvider() {
   return (
     <ThemeProvider>
-      <NowPlayingProvider>
-        <App />
-      </NowPlayingProvider>
+      <App />
     </ThemeProvider>
   );
 }

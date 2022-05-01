@@ -1,5 +1,7 @@
+import { useOutletContext } from "@remix-run/react";
 import type { Episode } from "podparse";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { PlayerContext } from "~/routes/__episodes";
 import { useNowPlaying } from "~/utils/nowplaying-provider";
 
 type Params = {
@@ -18,8 +20,7 @@ const markMatches = (str: string, matchedWords: string[]) =>
 export default function EpisodeComponent({ episode, keywords }: Params) {
   const [shareData, setShareDate] = useState<ShareData | undefined>();
 
-  const [playingEpisode, isPlaying, playEpisode, pauseEpisode] =
-    useNowPlaying();
+  const context = useOutletContext<PlayerContext>();
 
   useEffect(() => {
     const sd: ShareData = {
@@ -48,8 +49,8 @@ export default function EpisodeComponent({ episode, keywords }: Params) {
         }}
       />
       <div className="flex flex-row gap-4 my-4">
-        {episode.guid === playingEpisode?.guid && isPlaying ? (
-          <button title="Pause this episode" onClick={() => pauseEpisode()}>
+        {episode.link === context.nowPlaying && !context.isPaused ? (
+          <button title="Pause this episode" onClick={() => context.pause()}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="w-8 h-8 transition-opacity duration-500 text-slate-900 opacity-60 hover:opacity-100 dark:text-slate-200"
@@ -66,7 +67,7 @@ export default function EpisodeComponent({ episode, keywords }: Params) {
         ) : (
           <button
             title="Play this episode"
-            onClick={() => playEpisode(episode)}
+            onClick={() => context.play(episode)}
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"

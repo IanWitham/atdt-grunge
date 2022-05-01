@@ -27,6 +27,7 @@ export function NowPlayingProvider({ children }: { children: ReactNode }) {
     setIsPlaying(false);
     console.log("in handlePlayEpisode!", episode.title);
     setEpisode(episode);
+    setIsPlaying(true);
     const progress: number = parseFloat(
       localStorage.getItem(episode.guid) ?? "0.0"
     );
@@ -40,8 +41,6 @@ export function NowPlayingProvider({ children }: { children: ReactNode }) {
     } else {
       console.log("hey no reactplayer ref! ☹️");
     }
-
-    setIsPlaying(true);
   };
 
   const handlePauseEpisode = () => {

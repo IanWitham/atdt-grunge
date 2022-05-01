@@ -10,6 +10,7 @@ module.exports = {
         neon: ["Sacramento", "cursive"],
         bangers: ["Bangers", "Sans-Serif"],
         inter: ["Inter", "Sans-Serif"],
+        spacemono: ["Space Mono", "monospace"],
       },
       keyframes: {
         buzz: {
