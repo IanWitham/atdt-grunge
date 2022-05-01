@@ -1,3 +1,5 @@
+import { Theme, useTheme } from "./utils/theme-provider";
+
 type BulbParams = {
   x: number;
   y: number;
@@ -70,6 +72,8 @@ const points: number[][] = [
 ];
 
 export default function Sign() {
+  const [theme] = useTheme();
+
   return (
     <div>
       <svg
@@ -92,7 +96,11 @@ export default function Sign() {
               x="0"
               y="0"
               height="100%"
-              xlinkHref="/_static/redwall.jpg"
+              xlinkHref={
+                theme !== Theme.LIGHT
+                  ? "/_static/redwall.jpg"
+                  : "/_static/redwall-light.jpg"
+              }
             ></image>
           </pattern>
           <path
