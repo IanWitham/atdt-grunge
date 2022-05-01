@@ -21,7 +21,6 @@ import {
   useTheme,
 } from "./utils/theme-provider";
 import clsx from "clsx";
-import { NowPlayingProvider } from "./utils/nowplaying-provider";
 
 export const links: LinksFunction = () => {
   return [

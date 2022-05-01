@@ -1,8 +1,7 @@
 import { useOutletContext } from "@remix-run/react";
 import type { Episode } from "podparse";
-import { useContext, useEffect, useState } from "react";
-import { PlayerContext } from "~/routes/__episodes";
-import { useNowPlaying } from "~/utils/nowplaying-provider";
+import { useEffect, useState } from "react";
+import type { PlayerContext } from "~/routes/__episodes";
 
 type Params = {
   episode: Episode;

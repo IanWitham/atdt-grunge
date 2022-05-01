@@ -6,16 +6,15 @@ import { getEpisodes } from "~/models/show.server";
 import type { LoaderFunction } from "@remix-run/server-runtime";
 import { json } from "@remix-run/server-runtime";
 import type lunr from "lunr";
-import { FormEventHandler, useEffect, useState } from "react";
-import React, { useRef } from "react";
+import type { FormEventHandler } from "react";
+import { useState } from "react";
+import React, { useRef, useEffect } from "react";
 import EpisodeListing from "~/components/episodeListing";
 import Menu from "~/components/menu";
-import { useNowPlaying } from "~/utils/nowplaying-provider";
-import FilePlayer from "react-player/file";
+import type FilePlayer from "react-player/file";
 import type { Episode } from "podparse";
-import { useOptionalUser } from "~/utils";
 import dayjs from "dayjs";
-import { defaultResponseTransformers } from "msw/lib/types/response";
+import useDebounce from "use-debounce/lib/useDebounce";
 
 type LoaderData = {
   searchResult: lunr.Index.Result[];
@@ -53,7 +52,12 @@ export default function Index() {
   const [isPaused, setIsPaused] = useState<boolean>(true);
   const [isSeeking, setIsSeeking] = useState<boolean>(false);
   const [progress, setProgress] = useState<number>(0);
+  //const [debouncedProgress] = useDebounce(progress, 1000);
   const [duration, setDuration] = useState<number>(0);
+
+  // useEffect(() => {
+  //   reactPlayerRef?.current?.seekTo(debouncedProgress);
+  // }, [debouncedProgress]);
 
   const durationSeconds = Math.floor(duration % 60)
     .toString()
@@ -84,12 +88,16 @@ export default function Index() {
     setIsPaused(false);
   };
   const saveProgress = (playedSeconds: number) => {
-    setProgress(playedSeconds);
     if (nowPlaying?.link && playedSeconds !== 0) {
       localStorage.setItem(nowPlaying.link, playedSeconds.toString());
     }
+    if (!isSeeking) {
+      setProgress(playedSeconds);
+    }
   };
   const restoreSeek = () => {
+    setProgress(0);
+    console.log("restore seek");
     if (!nowPlaying?.link) {
       return;
     }
@@ -99,6 +107,7 @@ export default function Index() {
     }
     const progress: number = parseFloat(progressValue ?? "0");
     reactPlayerRef?.current?.seekTo(progress);
+    setProgress(progress);
   };
 
   const reselectText: FormEventHandler = (x) => {
@@ -244,11 +253,15 @@ export default function Index() {
                 )}
 
                 <input
-                  onChange={(e) =>
-                    reactPlayerRef.current?.seekTo(parseFloat(e.target.value))
-                  }
+                  onMouseDown={() => setIsSeeking(true)}
+                  onMouseUp={() => {
+                    reactPlayerRef.current?.seekTo(progress);
+                    setIsSeeking(false);
+                  }}
+                  onChange={(e) => setProgress(e.target.valueAsNumber)}
                   min={0}
-                  max={reactPlayerRef.current?.getDuration()}
+                  max={duration}
+                  step={10}
                   value={progress}
                   title="Episode Progress"
                   type="range"
@@ -266,7 +279,7 @@ export default function Index() {
             ref={(player) => (reactPlayerRef.current = player)}
             onProgress={(progress) => saveProgress(progress.playedSeconds)}
             url={nowPlaying?.enclosure.url}
-            playing={!isPaused}
+            playing={!isPaused && !isSeeking}
             onDuration={(d) => {
               setDuration(d);
               restoreSeek();
