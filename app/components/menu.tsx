@@ -11,7 +11,7 @@ export default function Menu() {
   };
 
   return (
-    <menu className="absolute flex flex-row items-center gap-2 top-4 right-4">
+    <menu className="absolute z-40 flex flex-row items-center gap-2 top-4 left-4 md:left-auto md:right-4">
       <button
         className="relative w-5 h-5 group"
         title="Toggle theme"
