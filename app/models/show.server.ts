@@ -18,12 +18,12 @@ export async function getEpisodes(search : string) {
     const indexResult = await await db.podcast.get({pk:"searchIndex"});
     const result = await await db.podcast.get({pk: "episodeList"});
     if (indexResult && result) {
-        console.log("searching", search);
+        //console.log("searching", search);
         const index = lunr.Index.load(JSON.parse((await ungzip(indexResult.body)).toString()));
         const searchResult = index.search(search);
         const episodes = (result.body as ShowListItem[]).filter(x => searchResult.map(y => y.ref).includes(x.link));
         const topResult = episodes.length > 0 ? (await getEpisode(`episode:${episodes[0].link}`)) : undefined
-        console.log(searchResult);
+        //console.log(searchResult);
         return { searchResult, episodes, topResult };
     }
 

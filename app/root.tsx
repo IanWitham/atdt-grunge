@@ -69,7 +69,7 @@ function App() {
         <Links />
         <NonFlashOfWrongThemeEls />
       </head>
-      <body className="h-full">
+      <body className="w-full h-full">
         <Outlet />
         <ScrollRestoration />
         <Scripts />
