@@ -35,20 +35,20 @@ export default function EpisodeComponent({ episode, keywords }: Params) {
   return (
     <>
       <h1
-        className="text-4xl font-bangers text-slate-900 dark:text-slate-200"
+        className="text-2xl font-bangers text-slate-900 dark:text-slate-200 lg:text-4xl"
         dangerouslySetInnerHTML={{
           __html: markMatches(episode.title.split(":")[0], keywords),
         }}
       />
 
       <h2
-        className="text-2xl text-red-600 font-bangers"
+        className="text-xl text-red-600 font-bangers lg:text-2xl"
         dangerouslySetInnerHTML={{
           __html: markMatches(episode.title.split(":")[1] ?? "", keywords),
         }}
       />
-      <div className="flex flex-row gap-4 my-4">
-        {episode.link === context.nowPlaying && !context.isPaused ? (
+      <div className="flex flex-row gap-4 my-1 lg:my-4">
+        {episode.link === context.nowPlaying && !context.paused ? (
           <button title="Pause this episode" onClick={() => context.pause()}>
             <svg
               xmlns="http://www.w3.org/2000/svg"

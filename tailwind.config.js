@@ -4,7 +4,7 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        rust: "url('/_static/istockphoto-1157807104-1024x1024.jpg')",
+        sky: "url('/_static/bluesky.jpg')",
       },
       fontFamily: {
         neon: ["Sacramento", "cursive"],

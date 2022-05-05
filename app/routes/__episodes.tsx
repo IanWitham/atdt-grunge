@@ -5,7 +5,6 @@ import {
   useLocation,
   useSearchParams,
 } from "@remix-run/react";
-import ReactPlayer from "react-player/file";
 import Sign from "~/sign2";
 import type { ShowListItem } from "~/models/show.server";
 import { getEpisodes } from "~/models/show.server";
@@ -14,11 +13,16 @@ import { json } from "@remix-run/server-runtime";
 import type lunr from "lunr";
 import type { FormEventHandler } from "react";
 import { useState } from "react";
-import React, { useRef, useEffect } from "react";
+import { useRef } from "react";
 import EpisodeListing from "~/components/episodeListing";
 import Menu from "~/components/menu";
-import type FilePlayer from "react-player/file";
 import type { Episode } from "podparse";
+import AudioPlayer from "~/components/audioplayer";
+import ReactPlayer from "react-player/file";
+import useAudioPlayer from "~/components/audioplayer";
+import FilePlayer from "react-player/file";
+import DesktopPlayerControls from "~/components/audioplayer/desktopplayercontrols";
+import MobilePlayerControls from "~/components/audioplayer/mobileplayercontrols";
 
 type LoaderData = {
   searchResult: lunr.Index.Result[];
@@ -40,8 +44,8 @@ export type PlayerContext = {
   nowPlaying: string | null;
   play: (episode: Episode) => void;
   pause: () => void;
-  isPaused: boolean;
-  isSeeking: boolean;
+  paused: boolean;
+  seeking: boolean;
 };
 
 export default function Index() {
@@ -52,86 +56,48 @@ export default function Index() {
   const location = useLocation();
   console.log(location.pathname);
 
-  // player state;
-  const reactPlayerRef = useRef<FilePlayer | null>();
   const [nowPlaying, setNowPlaying] = useState<Episode | null>(null);
-  const [isPaused, setIsPaused] = useState<boolean>(true);
-  const [isSeeking, setIsSeeking] = useState<boolean>(false);
-  const [progress, setProgress] = useState<number>(0);
-  const [duration, setDuration] = useState<number>(0);
-
-  const durationSeconds = Math.floor(duration % 60)
-    .toString()
-    .padStart(2, "0");
-  const durationMinutes = Math.floor((duration / 60) % 60)
-    .toString()
-    .padStart(2, "0");
-  const durationHours = Math.floor((duration / 3600) % 60).toString();
-  const formattedDuration = `${durationHours}:${durationMinutes}:${durationSeconds}`;
-  const progressSeconds = Math.floor(progress % 60)
-    .toString()
-    .padStart(2, "0");
-  const progressMinutes = Math.floor((progress / 60) % 60)
-    .toString()
-    .padStart(2, "0");
-  const progressHours = Math.floor((progress / 3600) % 60).toString();
-  const formattedProgress = `${progressHours}:${progressMinutes}:${progressSeconds}`;
-
-  const play = (episode: Episode) => {
-    setNowPlaying(episode);
-    setIsPaused(false);
-    //restoreSeek();
-  };
-  const pause = () => {
-    setIsPaused(true);
-  };
-  const unpause = () => {
-    setIsPaused(false);
-  };
-  const saveProgress = (playedSeconds: number) => {
-    if (nowPlaying?.link && playedSeconds !== 0) {
-      localStorage.setItem(nowPlaying.link, playedSeconds.toString());
-    }
-    if (!isSeeking) {
-      setProgress(playedSeconds);
-    }
-  };
-  const restoreSeek = () => {
-    setProgress(0);
-    console.log("restore seek");
-    if (!nowPlaying?.link) {
-      return;
-    }
-    const progressValue = localStorage.getItem(nowPlaying.link);
-    if (progressValue === null) {
-      return;
-    }
-    const progress: number = parseFloat(progressValue ?? "0");
-    reactPlayerRef?.current?.seekTo(progress);
-    setProgress(progress);
-  };
+  const [paused, setPaused] = useState<boolean>(false);
+  const [seeking] = useState<boolean>(false);
 
   const reselectText: FormEventHandler = (x) => {
     searchInput.current?.setSelectionRange(0, searchInput.current.value.length);
   };
 
+  const reactPlayerRef = useRef<FilePlayer | null>();
+
+  const play = (episode: Episode) => {
+    setNowPlaying(episode);
+    setPaused(false);
+  };
+  const pause = () => {
+    setPaused(true);
+  };
+  const unpause = () => {
+    setPaused(false);
+  };
+
+  const { playerControlParams, restoreSeek, saveProgress, setDuration } =
+    useAudioPlayer({ nowPlaying, paused, pause, unpause, reactPlayerRef });
+
   const outletContext: PlayerContext = {
     nowPlaying: nowPlaying?.link ?? null,
     play,
     pause,
-    isPaused,
-    isSeeking,
+    paused,
+    seeking,
   };
 
+  //from-blue-300 to-blue-500
   return (
-    <main className="relative flex flex-row w-screen h-screen overflow-clip bg-gradient-to-t from-slate-100 to-slate-300 dark:from-slate-700 dark:via-slate-900 dark:to-black">
+    <main className="relative w-screen h-screen bg-cover overflow-clip bg-sky dark:bg-gradient-to-t dark:from-slate-700 dark:via-slate-900 dark:to-black">
       <Menu />
-      <div className="flex flex-row justify-around flex-grow flex-shrink max-h-screen min-h-screen overflow-clip lg:justify-start">
-        <div className="relative h-screen overflow-clip">
+      <div className="flex flex-row justify-around w-screen max-h-screen min-h-screen lg:justify-start">
+        <div className="relative h-screen ">
           <div
             id="sign-area"
             className={`left-4 -mr-8 h-full origin-top-left -translate-x-3 -rotate-6 ${
-              nowPlaying === null ? "translate-y-8" : ""
+              nowPlaying === null ? "translate-y-8" : "lg:translate-y-8"
             }`}
           >
             <div className="translate-x-[-6.8vh]">
@@ -221,99 +187,45 @@ export default function Index() {
               </div>
             </div>
           </div>
-          {/* <div
-            className={`absolute bottom-0 left-0 h-16 w-full bg-blue-300 ${
-              nowPlaying === null ? "hidden" : ""
-            }`}
-          >
-            {nowPlaying?.title ?? "NON"}
-          </div> */}
         </div>
         <div
           id="show-notes"
-          className="z-30 hidden pl-8 pr-2 shrink overflow-x-clip lg:block"
+          className="z-30 flex-1 hidden w-full pl-0 pr-2 overflow-x-clip dark:pl-0 lg:flex xl:pl-6 dark:xl:pl-8"
         >
-          <article className="relative mt-24 h-[calc(100%-12em)] overflow-y-auto">
-            <Outlet context={outletContext} />
-          </article>
-
-          <ReactPlayer
-            ref={(player) => (reactPlayerRef.current = player)}
-            onProgress={(progress) => saveProgress(progress.playedSeconds)}
-            url={nowPlaying?.enclosure.url}
-            playing={!isPaused && !isSeeking}
-            onDuration={(d) => {
-              setDuration(d);
-              restoreSeek();
-            }}
-          />
+          <div className="flex flex-col max-w-xl gap-4">
+            <article className="relative mt-24 h-[calc(100%-12em)] overflow-y-auto rounded-3xl bg-white/50 p-8 backdrop-blur-lg dark:rounded-none dark:bg-transparent dark:p-0 dark:pr-4">
+              <Outlet context={outletContext} />
+            </article>
+            {!!nowPlaying && (
+              <>
+                <div className="-z-60 hidden h-16 max-w-[33rem] flex-col px-2 pt-2 text-xs lg:flex xl:max-w-xl">
+                  <DesktopPlayerControls {...playerControlParams} />
+                </div>
+              </>
+            )}
+          </div>
         </div>
       </div>
-      {nowPlaying !== null && (
-        <div className="absolute bottom-0 left-0 flex flex-row justify-center w-full h-16 gap-8 -z-60 bg-slate-800">
-          <div className="self-center text-slate-800 dark:text-slate-200">
-            Now Playing: {nowPlaying?.title}
-          </div>
-          <div className="flex flex-row self-center gap-2">
-            {!isPaused ? (
-              <button
-                title="Pause currently playing episode"
-                onClick={() => pause()}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-8 h-8 transition-opacity duration-500 text-slate-900 opacity-60 hover:opacity-100 dark:text-slate-200"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zM7 8a1 1 0 012 0v4a1 1 0 11-2 0V8zm5-1a1 1 0 00-1 1v4a1 1 0 102 0V8a1 1 0 00-1-1z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </button>
-            ) : (
-              <button
-                title="Resume currently playing episode"
-                onClick={() => unpause()}
-              >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-8 h-8 transition-opacity duration-500 text-slate-900 opacity-60 hover:opacity-100 dark:text-slate-200"
-                  viewBox="0 0 20 20"
-                  fill="currentColor"
-                >
-                  <path
-                    fillRule="evenodd"
-                    d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z"
-                    clipRule="evenodd"
-                  />
-                </svg>
-              </button>
-            )}
-
-            <input
-              onMouseDown={() => setIsSeeking(true)}
-              onMouseUp={() => {
-                reactPlayerRef.current?.seekTo(progress);
-                setIsSeeking(false);
-              }}
-              onChange={(e) => setProgress(e.target.valueAsNumber)}
-              min={0}
-              max={duration}
-              step={10}
-              value={progress}
-              title="Episode Progress"
-              type="range"
-              className="w-full"
-            />
-          </div>
-          <div className="self-center font-spacemono text-slate-800 dark:text-slate-200">
-            {formattedProgress} / {formattedDuration}
-          </div>
-        </div>
-      )}
+      <>
+        {!!nowPlaying && (
+          <>
+            <div className="absolute bottom-0 left-0 right-0 flex flex-col w-screen h-16 px-2 pt-2 text-xs bg-blue-500 -z-60 dark:bg-slate-800 lg:hidden">
+              <MobilePlayerControls {...playerControlParams} />
+            </div>
+          </>
+        )}
+      </>
+      );
+      <ReactPlayer
+        ref={(player) => (reactPlayerRef.current = player)}
+        onProgress={(progress) => saveProgress(progress.playedSeconds)}
+        url={nowPlaying?.enclosure.url}
+        playing={!paused && !seeking}
+        onDuration={(d) => {
+          setDuration(d);
+          restoreSeek();
+        }}
+      />
     </main>
   );
 }
