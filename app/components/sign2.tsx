@@ -1,4 +1,4 @@
-import { Theme, useTheme } from "./utils/theme-provider";
+// import { Theme, useTheme } from "../utils/theme-provider";
 
 type BulbParams = {
   x: number;
@@ -72,7 +72,7 @@ const points: number[][] = [
 ];
 
 export default function Sign() {
-  const [theme] = useTheme();
+  // const [theme] = useTheme();
 
   return (
     <div>
@@ -96,11 +96,7 @@ export default function Sign() {
               x="0"
               y="0"
               height="100%"
-              xlinkHref={
-                theme !== Theme.LIGHT
-                  ? "/_static/redwall.jpg"
-                  : "/_static/redwall-light.jpg"
-              }
+              xlinkHref="/_static/redwall.jpg"
             ></image>
           </pattern>
           <path
@@ -114,30 +110,9 @@ export default function Sign() {
           <circle id="Bulb" cx="0" cy="0" r="6" />
         </defs>
         <use xlinkHref="#SignShape" />
-        {/* <image
-              preserveAspectRatio="xMinYMin slice"
-              xlinkHref="istockphoto-1157807104-1024x1024.jpg"
-              clipPath="url(#SignClip)"
-            /> */}
         {points.map(([x, y], i) => (
           <Bulb x={x} y={y} phase={i % 4} key={i} />
         ))}
-        {/* <text
-              x="0"
-              y="140"
-              transform="rotate(-10)"
-              className="text-4xl neon-back font-neon"
-            >
-              At The Drive-Thru
-            </text> */}
-        {/* <text
-            x="0"
-            y="140"
-            transform="rotate(-10)"
-            className="neon [text-shadow:0 0 5px #ffa500, 0 0 15px #ffa500, 0 0 20px #ffa500, 0 0 40px #ffa500, 0 0 60px #ff0000, 0 0 10px #ff8d00, 0 0 98px #ff0000] animate-buzz fill-white font-neon text-4xl"
-          >
-            At The Drive-Thru
-          </text> */}
       </svg>
     </div>
   );

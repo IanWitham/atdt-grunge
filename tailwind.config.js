@@ -3,8 +3,19 @@ module.exports = {
   content: ["./app/**/*.{ts,tsx,jsx,js}"],
   theme: {
     extend: {
+      screens: {
+        // todo: implement a layout for smaller than biggish-mobile (i.e. smallish mobile)
+        "biggish-mobile": { min: "300px" },
+        "mobile-landscape": {
+          raw: "(max-height: 700px) and (orientation: landscape)",
+        },
+        landscape: {
+          raw: "(orientation: landscape)",
+        },
+      },
       backgroundImage: {
         sky: "url('/_static/bluesky.jpg')",
+        redwall: "url('/_static/redwall.jpg')",
       },
       fontFamily: {
         neon: ["Sacramento", "cursive"],

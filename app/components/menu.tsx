@@ -11,16 +11,16 @@ export default function Menu() {
   };
 
   return (
-    <menu className="absolute z-40 flex flex-row items-center gap-2 top-4 left-4 md:left-auto md:right-4">
+    <menu className="flex flex-row items-center gap-2 ">
       <button
-        className="relative w-5 h-5 group"
+        className="relative w-4 h-4 group sm:h-5 sm:w-5"
         title="Toggle theme"
         onClick={toggleTheme}
       >
         {/* sun */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="absolute top-0 left-0 w-5 h-5 transition-opacity duration-500 opacity-0 text-slate-900 dark:text-white dark:opacity-60 dark:group-hover:opacity-100"
+          className="absolute top-0 left-0 w-4 h-4 transition-opacity duration-500 opacity-0 text-slate-900 dark:text-white dark:opacity-60 dark:group-hover:opacity-100 sm:h-5 sm:w-5"
           viewBox="0 0 20 20"
           fill="currentColor"
         >
@@ -33,7 +33,7 @@ export default function Menu() {
         {/* moon */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="absolute top-0 left-0 w-5 h-5 transition-opacity duration-500 text-slate-900 opacity-60 hover:opacity-100 dark:text-white dark:opacity-0 hover:dark:opacity-0"
+          className="absolute top-0 left-0 w-4 h-4 transition-opacity duration-500 text-slate-900 opacity-60 hover:opacity-100 dark:text-white dark:opacity-0 hover:dark:opacity-0 sm:h-5 sm:w-5"
           viewBox="0 0 20 20"
           fill="currentColor"
         >
@@ -54,7 +54,7 @@ export default function Menu() {
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="currentColor"
-          className="w-5 h-5 transition-opacity duration-500 text-slate-900 opacity-60 hover:opacity-100 dark:text-white"
+          className="w-4 h-4 transition-opacity duration-500 text-slate-900 opacity-60 hover:opacity-100 dark:text-white sm:h-5 sm:w-5"
           viewBox="0 0 512 512"
         >
           <path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z" />
@@ -63,7 +63,7 @@ export default function Menu() {
       <a title="Email us" href="mailto:theegonomistnz@gmail.com">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="w-5 h-5 transition-opacity duration-500 text-slate-900 opacity-60 hover:opacity-100 dark:text-white"
+          className="w-4 h-4 transition-opacity duration-500 text-slate-900 opacity-60 hover:opacity-100 dark:text-white sm:h-5 sm:w-5"
           viewBox="0 0 20 20"
           fill="currentColor"
         >
@@ -77,7 +77,7 @@ export default function Menu() {
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="w-5 h-5 transition-opacity duration-500 text-slate-900 opacity-60 hover:opacity-100 dark:text-white"
+          className="w-4 h-4 transition-opacity duration-500 text-slate-900 opacity-60 hover:opacity-100 dark:text-white sm:h-5 sm:w-5"
           viewBox="0 0 448 512"
           fill="currentColor"
         >
@@ -87,7 +87,7 @@ export default function Menu() {
       <a title="RSS" href="http://atthedrivethru.co.nz/rss">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="w-5 h-5 transition-opacity duration-500 text-slate-900 opacity-60 hover:opacity-100 dark:text-white"
+          className="w-4 h-4 transition-opacity duration-500 text-slate-900 opacity-60 hover:opacity-100 dark:text-white sm:h-5 sm:w-5"
           viewBox="0 0 20 20"
           fill="currentColor"
         >
@@ -96,7 +96,7 @@ export default function Menu() {
         </svg>
       </a>
       <Link
-        className="text-lg transition-opacity duration-500 font-inter text-slate-900 opacity-60 hover:opacity-100 dark:text-white"
+        className="text-sm transition-opacity duration-500 font-inter text-slate-900 opacity-60 hover:opacity-100 dark:text-white"
         to="/about"
       >
         About

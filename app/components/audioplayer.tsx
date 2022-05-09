@@ -1,15 +1,26 @@
-import type { AudioPlayerParams } from "./audioplayer/audioplayerparams";
-import type FilePlayer from "react-player/file";
-import type { PlayerControlsParams } from "./audioplayer/playercontrolsparams";
-import { useRef, useState } from "react";
+import type { MutableRefObject } from "react";
+import { useState } from "react";
+import type { Episode } from "podparse";
+import type ReactPlayer from "react-player/file";
+
+type UseAudioPlayerParams = {
+  nowPlaying: Episode | null;
+  reactPlayerRef: MutableRefObject<ReactPlayer | null | undefined>;
+};
+
+type UseAudioPlayerResult = {
+  progress: number;
+  setProgress: (progressSeconds: number) => void;
+  duration: number;
+  setDuration: (durationSeconds: number) => void;
+  saveProgress: (playedSeconds: number) => void;
+  restoreSeek: () => void;
+};
 
 export default function useAudioPlayer({
   nowPlaying,
-  paused,
-  pause,
-  unpause,
   reactPlayerRef,
-}: AudioPlayerParams) {
+}: UseAudioPlayerParams) {
   const [progress, setProgress] = useState<number>(0);
   const [duration, setDuration] = useState<number>(0);
   const [seeking] = useState<boolean>();
@@ -22,6 +33,7 @@ export default function useAudioPlayer({
       setProgress(playedSeconds);
     }
   };
+
   const restoreSeek = () => {
     setProgress(0);
     console.log("restore seek");
@@ -37,16 +49,14 @@ export default function useAudioPlayer({
     setProgress(progress);
   };
 
-  const playerControlParams: PlayerControlsParams = {
-    pause,
-    unpause,
-    nowPlaying,
-    reactPlayerRef,
-    paused,
+  const result: UseAudioPlayerResult = {
     progress,
-    duration,
     setProgress,
+    saveProgress,
+    duration,
+    setDuration,
+    restoreSeek,
   };
 
-  return { playerControlParams, saveProgress, restoreSeek, setDuration };
+  return result;
 }

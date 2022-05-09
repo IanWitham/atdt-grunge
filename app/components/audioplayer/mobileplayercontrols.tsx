@@ -85,7 +85,7 @@ export default function MobilePlayerControls({
         <Marquee
           className="flex-initial block"
           gradientWidth={50}
-          gradientColor={[59, 130, 246]}
+          gradientColor={[255, 255, 255]}
         >
           <div className="whitespace-nowrap font-spacemono text-slate-800">
             <span className="px-2">🎙</span>

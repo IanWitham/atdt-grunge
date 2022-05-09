@@ -1,7 +1,7 @@
 import { useOutletContext } from "@remix-run/react";
 import type { Episode } from "podparse";
 import { useEffect, useState } from "react";
-import type { PlayerContext } from "~/routes/__episodes";
+import type { AudioPlayerParams } from "./audioplayer/audioplayerparams";
 
 type Params = {
   episode: Episode;
@@ -19,7 +19,7 @@ const markMatches = (str: string, matchedWords: string[]) =>
 export default function EpisodeComponent({ episode, keywords }: Params) {
   const [shareData, setShareDate] = useState<ShareData | undefined>();
 
-  const context = useOutletContext<PlayerContext>();
+  const context = useOutletContext<AudioPlayerParams>();
 
   useEffect(() => {
     const sd: ShareData = {
@@ -48,7 +48,7 @@ export default function EpisodeComponent({ episode, keywords }: Params) {
         }}
       />
       <div className="flex flex-row gap-4 my-1 lg:my-4">
-        {episode.link === context.nowPlaying && !context.paused ? (
+        {episode.guid === context.nowPlaying?.guid && !context.paused ? (
           <button title="Pause this episode" onClick={() => context.pause()}>
             <svg
               xmlns="http://www.w3.org/2000/svg"

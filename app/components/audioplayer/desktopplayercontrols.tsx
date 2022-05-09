@@ -1,5 +1,5 @@
 import Marquee from "react-fast-marquee";
-import type { PlayerControlsParams } from "./playercontrolsparams";
+import type { AudioPlayerParams } from "./audioplayerparams";
 import { formatDuration } from "./utils";
 
 export default function DesktopPlayerControls({
@@ -11,7 +11,7 @@ export default function DesktopPlayerControls({
   progress,
   setProgress,
   duration,
-}: PlayerControlsParams) {
+}: AudioPlayerParams) {
   return (
     <div className="text-xs font-spacemono text-slate-100">
       <div className="flex flex-row gap-2">
