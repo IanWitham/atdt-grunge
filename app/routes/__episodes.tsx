@@ -12,7 +12,7 @@ import useAudioPlayer from "~/components/audioplayer";
 import type FilePlayer from "react-player/file";
 import MainLayout from "~/components/layouts/mainLayout";
 import type { AudioPlayerParams } from "~/components/audioplayer/audioplayerparams";
-import MobileLandscapeLayout from "~/components/layouts/mobilelandscapelayout";
+import MobileLandscapeLayout from "~/components/layouts/mobileLandscapeLayout";
 import SmallMobileLayout from "~/components/layouts/smallMobileLayout";
 
 type LoaderData = {
@@ -70,7 +70,7 @@ export default function Index() {
   //from-blue-300 to-blue-500
   return (
     <>
-      <div className="fixed inset-0 bg-sky bg-cover dark:bg-gradient-to-t dark:from-slate-700 dark:via-slate-900 dark:to-black " />
+      <div className="fixed inset-0 bg-cover bg-sky dark:bg-gradient-to-t dark:from-slate-700 dark:via-slate-900 dark:to-black " />
       <div className="block mobile-landscape:hidden">
         <div className="hidden biggish-mobile:block">
           <MainLayout

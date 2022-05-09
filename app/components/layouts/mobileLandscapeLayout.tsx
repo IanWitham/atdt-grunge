@@ -1,4 +1,4 @@
-import { Form, Link, Outlet, useLocation } from "@remix-run/react";
+import { Form, Link, Outlet } from "@remix-run/react";
 import type { FormEventHandler } from "react";
 import { useRef } from "react";
 import DesktopPlayerControls from "../audioplayer/desktopplayercontrols";
@@ -15,7 +15,6 @@ export default function MobileLandscapeLayout({
   const reselectText: FormEventHandler = (x) => {
     searchInput.current?.setSelectionRange(0, searchInput.current.value.length);
   };
-  const location = useLocation();
   return (
     <main className="relative w-screen">
       <div className="pl-[33.3vw]">
