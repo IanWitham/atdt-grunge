@@ -38,7 +38,6 @@ export default function Index() {
 
   const [nowPlaying, setNowPlaying] = useState<Episode | null>(null);
   const [paused, setPaused] = useState<boolean>(false);
-  const [seeking] = useState<boolean>(false);
 
   const reactPlayerRef = useRef<FilePlayer | null>();
 
@@ -62,6 +61,7 @@ export default function Index() {
     play,
     paused,
     reactPlayerRef,
+    setSeeking: audioPlayerResponse.setSeeking,
     duration: audioPlayerResponse.duration,
     progress: audioPlayerResponse.progress,
     setProgress: audioPlayerResponse.setProgress,
@@ -101,7 +101,7 @@ export default function Index() {
             audioPlayerResponse.saveProgress(progress.playedSeconds)
           }
           url={nowPlaying?.enclosure.url}
-          playing={!paused && !seeking}
+          playing={!paused && !audioPlayerResponse.seeking}
           onEnded={() => {
             //audioPlayerResponse.setProgress(0);
             pause();

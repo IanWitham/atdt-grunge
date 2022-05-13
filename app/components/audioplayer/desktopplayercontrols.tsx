@@ -10,6 +10,7 @@ export default function DesktopPlayerControls({
   reactPlayerRef,
   progress,
   setProgress,
+  setSeeking,
   duration,
 }: AudioPlayerParams) {
   return (
@@ -51,11 +52,16 @@ export default function DesktopPlayerControls({
         )}
 
         <input
-          onMouseUp={() => {
-            reactPlayerRef.current?.seekTo(progress);
-            //setSeeking(false);
+          // onMouseUp={() => {
+          //   setSeeking(true);
+          //   setProgress(pro)
+          //   //reactPlayerRef.current?.seekTo(progress);
+          //   //setSeeking(false);
+          // }}
+          onChange={(e) => {
+            setSeeking(true);
+            setProgress(e.target.valueAsNumber);
           }}
-          onChange={(e) => setProgress(e.target.valueAsNumber)}
           min={0}
           max={duration}
           step={10}
@@ -67,7 +73,7 @@ export default function DesktopPlayerControls({
       </div>
       <div className="flex-row hidden gap-2 dark:flex">
         <Marquee
-          className="flex-initial block"
+          className=""
           gradientWidth={50}
           gradientColor={[30, 41, 59]}
           gradient={false}
@@ -84,7 +90,7 @@ export default function DesktopPlayerControls({
       </div>
       <div className="flex flex-row gap-2 dark:hidden">
         <Marquee
-          className="flex-initial block"
+          className=""
           gradientWidth={50}
           gradientColor={[59, 130, 246]}
           gradient={false}

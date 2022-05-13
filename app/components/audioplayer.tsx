@@ -1,4 +1,4 @@
-import type { MutableRefObject } from "react";
+import { MutableRefObject, useEffect } from "react";
 import { useState } from "react";
 import type { Episode } from "podparse";
 import type ReactPlayer from "react-player/file";
@@ -15,6 +15,8 @@ type UseAudioPlayerResult = {
   setDuration: (durationSeconds: number) => void;
   saveProgress: (playedSeconds: number) => void;
   restoreSeek: () => void;
+  seeking: boolean;
+  setSeeking: (x: boolean) => void;
 };
 
 export default function useAudioPlayer({
@@ -23,7 +25,15 @@ export default function useAudioPlayer({
 }: UseAudioPlayerParams) {
   const [progress, setProgress] = useState<number>(0);
   const [duration, setDuration] = useState<number>(0);
-  const [seeking] = useState<boolean>();
+  const [seeking, setSeeking] = useState<boolean>(false);
+
+  useEffect(() => {
+    console.log(progress, seeking);
+    if (seeking) {
+      reactPlayerRef.current?.seekTo(progress);
+      setSeeking(false);
+    }
+  }, [progress, reactPlayerRef, seeking]);
 
   const saveProgress = (playedSeconds: number) => {
     if (nowPlaying?.link && playedSeconds !== 0) {
@@ -45,8 +55,8 @@ export default function useAudioPlayer({
       return;
     }
     const progress: number = parseFloat(progressValue ?? "0");
-    reactPlayerRef?.current?.seekTo(progress);
     setProgress(progress);
+    reactPlayerRef?.current?.seekTo(progress);
   };
 
   const result: UseAudioPlayerResult = {
@@ -56,6 +66,8 @@ export default function useAudioPlayer({
     duration,
     setDuration,
     restoreSeek,
+    seeking,
+    setSeeking,
   };
 
   return result;

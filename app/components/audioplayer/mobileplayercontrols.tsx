@@ -10,6 +10,7 @@ export default function MobilePlayerControls({
   reactPlayerRef,
   progress,
   setProgress,
+  setSeeking,
   duration,
 }: AudioPlayerParams) {
   return (
@@ -51,11 +52,10 @@ export default function MobilePlayerControls({
         )}
 
         <input
-          onMouseUp={() => {
-            reactPlayerRef.current?.seekTo(progress);
-            //setSeeking(false);
+          onChange={(e) => {
+            setSeeking(true);
+            setProgress(e.target.valueAsNumber);
           }}
-          onChange={(e) => setProgress(e.target.valueAsNumber)}
           min={0}
           max={duration}
           step={10}
@@ -66,11 +66,7 @@ export default function MobilePlayerControls({
         />
       </div>
       <div className="flex-row hidden dark:flex">
-        <Marquee
-          className="flex-initial block"
-          gradientWidth={50}
-          gradientColor={[30, 41, 59]}
-        >
+        <Marquee className="" gradientWidth={50} gradientColor={[30, 41, 59]}>
           <div className="whitespace-nowrap font-spacemono text-slate-100">
             <span className="px-2">🎙</span>
             <span className="px-2">Now Playing: {nowPlaying?.title}</span>
@@ -83,7 +79,7 @@ export default function MobilePlayerControls({
       </div>
       <div className="flex flex-row dark:hidden">
         <Marquee
-          className="flex-initial block"
+          className=""
           gradientWidth={50}
           gradientColor={[255, 255, 255]}
         >

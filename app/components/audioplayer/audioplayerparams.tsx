@@ -11,5 +11,6 @@ export type AudioPlayerParams = {
   reactPlayerRef: MutableRefObject<ReactPlayer | null | undefined>;
   progress: number;
   setProgress: (x: number) => void;
+  setSeeking: (x: boolean) => void;
   duration: number;
 };
