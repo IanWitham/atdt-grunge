@@ -1,4 +1,4 @@
-import { useOutletContext } from "@remix-run/react";
+import { Link, useOutletContext } from "@remix-run/react";
 import type { Episode } from "podparse";
 import { useEffect, useState } from "react";
 import { ClientOnly } from "remix-utils";
@@ -35,6 +35,28 @@ export default function EpisodeComponent({ episode, keywords }: Params) {
 
   return (
     <>
+      <Link
+        title="Back to episode list"
+        to="/"
+        className="flex flex-row items-center self-start pt-1 pb-1 pl-1 pr-3 -mt-2 -ml-2 text-white rounded-br-lg bg-slate-500 dark:bg-slate-300 dark:text-slate-900 lg:hidden mobile-landscape:hidden"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          className="w-4 h-4"
+          fill="none"
+          viewBox="0 0 24 24"
+          stroke="currentColor"
+          strokeWidth={2}
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            d="M11 15l-3-3m0 0l3-3m-3 3h8M3 12a9 9 0 1118 0 9 9 0 01-18 0z"
+          />
+        </svg>
+        <div className="pl-1 text-sm font-inter">Back</div>
+      </Link>
+
       <h1
         className="text-2xl font-bangers text-slate-900 dark:text-slate-200 lg:text-4xl"
         dangerouslySetInnerHTML={{
