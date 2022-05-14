@@ -24,7 +24,18 @@ export default function MobileLandscapeLayout({
       </div>
       {audioPlayerParams.nowPlaying && (
         <div className="fixed bottom-0 right-0 h-16 w-[66.7vw] bg-white/50 px-2 pt-2 backdrop-blur-sm dark:bg-slate-800/50">
-          <DesktopPlayerControls {...audioPlayerParams} />
+          <DesktopPlayerControls
+            nowPlaying={audioPlayerParams.nowPlaying}
+            pause={audioPlayerParams.pause}
+            paused={audioPlayerParams.paused}
+            progress={audioPlayerParams.progress}
+            reactPlayerRef={audioPlayerParams.reactPlayerRef}
+            setProgress={audioPlayerParams.setProgress}
+            setSeeking={audioPlayerParams.setSeeking}
+            unpause={audioPlayerParams.unpause}
+            duration={audioPlayerParams.duration}
+            play={audioPlayerParams.play}
+          />
         </div>
       )}
       {/* Side Panel */}

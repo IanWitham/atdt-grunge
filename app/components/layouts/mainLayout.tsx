@@ -131,7 +131,18 @@ export default function MainLayout({
           {!!audioPlayerParams.nowPlaying && (
             <>
               <div className="-z-60 fixed left-[65vh] right-0 bottom-4 h-[4.5] max-w-[40rem] bg-white/50 p-4 text-xs backdrop-blur-sm dark:bg-slate-800/50">
-                <DesktopPlayerControls {...audioPlayerParams} />
+                <DesktopPlayerControls
+                  nowPlaying={audioPlayerParams.nowPlaying}
+                  pause={audioPlayerParams.pause}
+                  paused={audioPlayerParams.paused}
+                  progress={audioPlayerParams.progress}
+                  reactPlayerRef={audioPlayerParams.reactPlayerRef}
+                  setProgress={audioPlayerParams.setProgress}
+                  setSeeking={audioPlayerParams.setSeeking}
+                  unpause={audioPlayerParams.unpause}
+                  duration={audioPlayerParams.duration}
+                  play={audioPlayerParams.play}
+                />
               </div>
             </>
           )}
@@ -144,7 +155,18 @@ export default function MainLayout({
         {audioPlayerParams.nowPlaying && (
           <>
             <div className="fixed bottom-0 left-0 right-0 w-screen h-16 px-2 pt-2 text-xs bg-white -z-60 dark:bg-slate-800 lg:hidden">
-              <MobilePlayerControls {...audioPlayerParams} />
+              <MobilePlayerControls
+                nowPlaying={audioPlayerParams.nowPlaying}
+                pause={audioPlayerParams.pause}
+                paused={audioPlayerParams.paused}
+                progress={audioPlayerParams.progress}
+                reactPlayerRef={audioPlayerParams.reactPlayerRef}
+                setProgress={audioPlayerParams.setProgress}
+                setSeeking={audioPlayerParams.setSeeking}
+                unpause={audioPlayerParams.unpause}
+                duration={audioPlayerParams.duration}
+                play={audioPlayerParams.play}
+              />
             </div>
           </>
         )}
