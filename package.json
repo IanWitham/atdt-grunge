@@ -25,7 +25,7 @@
     "/public/build"
   ],
   "dependencies": {
-    "@architect/architect": "^10.3.2",
+    "@architect/architect": "^10.3.3",
     "@architect/functions": "^5.0.4",
     "@remix-run/architect": "^1.4.0",
     "@remix-run/node": "^1.4.0",
