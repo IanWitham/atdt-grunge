@@ -14,14 +14,15 @@ export const loader: LoaderFunction = async ({ params }) => {
   if (!episode) {
     throw new Response("Not Found", { status: 404 });
   } else {
-    return json({ episode: episode });
+    return json(
+      { episode: episode },
+      {
+        headers: {
+          "Cache-Control": "public, max-age=2419200",
+        },
+      }
+    );
   }
-};
-
-export const headers: HeadersFunction = () => {
-  return {
-    //"Cache-Control": "max-age=300, stale-while-revalidate=1200",
-  };
 };
 
 type LoaderDataType = {

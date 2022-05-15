@@ -1,13 +1,6 @@
 import { useMatches } from "@remix-run/react";
-import type { HeadersFunction } from "@remix-run/server-runtime";
 import type lunr from "lunr";
 import EpisodeComponent from "~/components/episode";
-
-export const headers: HeadersFunction = () => {
-  return {
-    //"Cache-Control": "max-age=300, stale-while-revalidate=1200",
-  };
-};
 
 export default function Index() {
   const matches = useMatches();

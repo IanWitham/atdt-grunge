@@ -1,4 +1,8 @@
-import type { LinksFunction, MetaFunction } from "@remix-run/node";
+import type {
+  HeadersFunction,
+  LinksFunction,
+  MetaFunction,
+} from "@remix-run/node";
 import {
   Links,
   LiveReload,
@@ -15,6 +19,12 @@ import {
   useTheme,
 } from "./utils/theme-provider";
 import clsx from "clsx";
+
+export const headers: HeadersFunction = () => {
+  return {
+    "Cache-Control": "public, max-age=3600",
+  };
+};
 
 export const links: LinksFunction = () => {
   return [
