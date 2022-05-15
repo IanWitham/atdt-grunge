@@ -28,7 +28,7 @@ export default function useAudioPlayer({
   const [seeking, setSeeking] = useState<boolean>(false);
 
   useEffect(() => {
-    console.log(progress, seeking);
+    //console.log(progress, seeking);
     if (seeking) {
       reactPlayerRef.current?.seekTo(progress);
       setSeeking(false);
@@ -46,7 +46,7 @@ export default function useAudioPlayer({
 
   const restoreSeek = () => {
     setProgress(0);
-    console.log("restore seek");
+    //console.log("restore seek");
     if (!nowPlaying?.link) {
       return;
     }
