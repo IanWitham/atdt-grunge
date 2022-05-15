@@ -1,11 +1,8 @@
 import { useLoaderData, useMatches, useParams } from "@remix-run/react";
 import EpisodeComponent from "../../components/episode";
-import {
-  LoaderFunction,
-  json,
-  HeadersFunction,
-} from "@remix-run/server-runtime";
-import { Episode } from "podparse";
+import type { LoaderFunction } from "@remix-run/server-runtime";
+import { json } from "@remix-run/server-runtime";
+import type { Episode } from "podparse";
 
 import { getEpisode } from "~/models/show.server";
 
