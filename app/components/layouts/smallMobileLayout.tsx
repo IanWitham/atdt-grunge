@@ -1,6 +1,7 @@
 import { Form, Link, useLocation } from "@remix-run/react";
 import type { FormEventHandler } from "react";
 import { useRef } from "react";
+import MobilePlayerControls from "../audioplayer/mobileplayercontrols";
 import Menu from "../menu";
 import NavScreen from "../navScreen";
 import type { LayoutParams } from "./layoutParams";
@@ -18,7 +19,11 @@ export default function SmallMobileLayout({
 
   return (
     <>
-      <div className="fixed inset-0 h-screen bg-redwall bg-cover px-4 pt-[44vw] pb-4">
+      <div
+        className={`fixed inset-0 h-screen bg-redwall bg-cover px-4 pt-[44vw] ${
+          audioPlayerParams.nowPlaying ? "pb-20" : "pb-4"
+        }`}
+      >
         <div className="h-full w-full bg-gradient-to-tl from-slate-500 to-slate-400 p-2  shadow-[-5px_-5px_15px_0_rgba(0,0,0,0.5)] dark:from-slate-500 dark:to-slate-400">
           <div className="flex flex-col justify-between h-full bg-white dark:bg-slate-800">
             <NavScreen
@@ -59,6 +64,24 @@ export default function SmallMobileLayout({
           </div>
         </div>
       </div>
+      {audioPlayerParams.nowPlaying && (
+        <>
+          <div className="fixed bottom-0 left-0 right-0 w-screen h-16 px-2 pt-2 text-xs bg-white z-60 dark:bg-slate-800 lg:hidden">
+            <MobilePlayerControls
+              nowPlaying={audioPlayerParams.nowPlaying}
+              pause={audioPlayerParams.pause}
+              paused={audioPlayerParams.paused}
+              progress={audioPlayerParams.progress}
+              reactPlayerRef={audioPlayerParams.reactPlayerRef}
+              setProgress={audioPlayerParams.setProgress}
+              setSeeking={audioPlayerParams.setSeeking}
+              unpause={audioPlayerParams.unpause}
+              duration={audioPlayerParams.duration}
+              play={audioPlayerParams.play}
+            />
+          </div>
+        </>
+      )}
       <div className="neon fixed top-[22vw] left-0 right-0 -rotate-6 animate-buzz text-center font-neon text-white">
         {/* screen */}
         <Link to="/" className="text-[12vw] ">
