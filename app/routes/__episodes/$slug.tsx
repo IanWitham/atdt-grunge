@@ -1,11 +1,8 @@
 import { useLoaderData, useMatches, useParams } from "@remix-run/react";
 import EpisodeComponent from "../../components/episode";
-import {
-  LoaderFunction,
-  json,
-  HeadersFunction,
-} from "@remix-run/server-runtime";
-import { Episode } from "podparse";
+import type { LoaderFunction } from "@remix-run/server-runtime";
+import { json } from "@remix-run/server-runtime";
+import type { Episode } from "podparse";
 
 import { getEpisode } from "~/models/show.server";
 
@@ -14,14 +11,15 @@ export const loader: LoaderFunction = async ({ params }) => {
   if (!episode) {
     throw new Response("Not Found", { status: 404 });
   } else {
-    return json({ episode: episode });
+    return json(
+      { episode: episode },
+      {
+        headers: {
+          "Cache-Control": "public, max-age=2419200",
+        },
+      }
+    );
   }
-};
-
-export const headers: HeadersFunction = () => {
-  return {
-    //"Cache-Control": "max-age=300, stale-while-revalidate=1200",
-  };
 };
 
 type LoaderDataType = {

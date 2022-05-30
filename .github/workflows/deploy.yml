@@ -53,26 +53,26 @@ jobs:
       - name: 🔎 Type check
         run: npm run typecheck --if-present
 
-  vitest:
-    name: ⚡ Vitest
-    runs-on: ubuntu-latest
-    steps:
-      - name: 🛑 Cancel Previous Runs
-        uses: styfle/cancel-workflow-action@0.9.1
+  # vitest:
+  #   name: ⚡ Vitest
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: 🛑 Cancel Previous Runs
+  #       uses: styfle/cancel-workflow-action@0.9.1
 
-      - name: ⬇️ Checkout repo
-        uses: actions/checkout@v3
+  #     - name: ⬇️ Checkout repo
+  #       uses: actions/checkout@v3
 
-      - name: ⎔ Setup node
-        uses: actions/setup-node@v3
-        with:
-          node-version: 14
+  #     - name: ⎔ Setup node
+  #       uses: actions/setup-node@v3
+  #       with:
+  #         node-version: 14
 
-      - name: 📥 Download deps
-        uses: bahmutov/npm-install@v1
+  #     - name: 📥 Download deps
+  #       uses: bahmutov/npm-install@v1
 
-      - name: ⚡ Run vitest
-        run: npm run test -- --coverage
+  #     - name: ⚡ Run vitest
+  #       run: npm run test -- --coverage
 
   # cypress:
   #   name: ⚫️ Cypress
@@ -107,7 +107,7 @@ jobs:
   #         PORT: "8811"
 
   deploy:
-    needs: [lint, typecheck, vitest] #, cypress]
+    needs: [lint, typecheck] #, vitest] #, cypress]
     runs-on: ubuntu-latest
 
     steps:
@@ -139,6 +139,16 @@ jobs:
 
       - name: 🛠 Install Arc
         run: npm i -g @architect/architect
+
+      - name: 🌳 Environment Variables
+        run: |
+          arc env --add --env production ARC_APP_SECRET ${{ secrets.PROD_ARC_APP_SECRET }}
+          arc env --add --env production SESSION_SECRET ${{ secrets.PROD_SESSION_SECRET }}
+          arc env --add --env staging ARC_APP_SECRET ${{ secrets.STAGING_ARC_APP_SECRET }}
+          arc env --add --env staging SESSION_SECRET ${{ secrets.STAGING_SESSION_SECRET }}
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
 
       - name: 🚀 Staging Deploy
         if: github.ref == 'refs/heads/dev'

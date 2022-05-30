@@ -1,9 +1,9 @@
 import { useLoaderData } from "@remix-run/react";
-import {
+import type {
   LoaderFunction,
-  json,
   HeadersFunction,
 } from "@remix-run/server-runtime";
+import { json } from "@remix-run/server-runtime";
 import { getAbout } from "~/models/show.server";
 
 export const loader: LoaderFunction = async () => {
@@ -11,7 +11,14 @@ export const loader: LoaderFunction = async () => {
   if (!about) {
     throw new Response("Not Found", { status: 404 });
   } else {
-    return json({ about: about });
+    return json(
+      { about: about },
+      {
+        headers: {
+          "Cache-Control": "public, max-age=604800",
+        },
+      }
+    );
   }
 };
 

@@ -1,15 +1,27 @@
 module.exports = {
-  darkMode: "media",
+  darkMode: "class",
   content: ["./app/**/*.{ts,tsx,jsx,js}"],
   theme: {
     extend: {
+      screens: {
+        // todo: implement a layout for smaller than biggish-mobile (i.e. smallish mobile)
+        "biggish-mobile": { min: "300px" },
+        "mobile-landscape": {
+          raw: "(max-height: 700px) and (orientation: landscape)",
+        },
+        landscape: {
+          raw: "(orientation: landscape)",
+        },
+      },
       backgroundImage: {
-        rust: "url('/_static/istockphoto-1157807104-1024x1024.jpg')",
+        sky: "url('/_static/bluesky.jpg')",
+        redwall: "url('/_static/redwall.jpg')",
       },
       fontFamily: {
         neon: ["Sacramento", "cursive"],
         bangers: ["Bangers", "Sans-Serif"],
         inter: ["Inter", "Sans-Serif"],
+        spacemono: ["Space Mono", "monospace"],
       },
       keyframes: {
         buzz: {
@@ -23,10 +35,10 @@ module.exports = {
         },
       },
       animation: {
-        buzz: "buzz 0.01s infinite alternate ease",
+        buzz: "buzz 0.1s infinite alternate ease",
         bulb: "march 1s infinite",
       },
     },
   },
-  plugins: [require("@tailwindcss/typography")],
+  plugins: [require("@tailwindcss/typography"), require("@tailwindcss/forms")],
 };
