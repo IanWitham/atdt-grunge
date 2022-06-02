@@ -68,7 +68,7 @@ export default function MainLayout({
                       defaultValue={search ?? ""}
                       placeholder="Search"
                       inputMode="search"
-                      type="text"
+                      type="search"
                       className="w-full px-10 py-2 bg-transparent border rounded-full border-slate-800 font-inter text-slate-800 dark:border-slate-200 dark:text-slate-200"
                     />
                   </Form>
