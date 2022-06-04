@@ -2,7 +2,7 @@
 atdt-grunge-3922
 
 @aws
-region ap-southeast-2
+region us-east-1
 
 @http
 /*
