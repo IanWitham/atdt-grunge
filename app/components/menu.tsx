@@ -13,14 +13,14 @@ export default function Menu() {
   return (
     <menu className="flex flex-row items-center gap-2 ">
       <button
-        className="relative w-4 h-4 group sm:h-5 sm:w-5"
+        className="group relative h-4 w-4 sm:h-5 sm:w-5"
         title="Toggle theme"
         onClick={toggleTheme}
       >
         {/* sun */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="absolute top-0 left-0 w-4 h-4 transition-opacity duration-500 opacity-0 text-slate-900 dark:text-white dark:opacity-60 dark:group-hover:opacity-100 sm:h-5 sm:w-5"
+          className="absolute top-0 left-0 h-4 w-4 text-slate-900 opacity-0 transition-opacity duration-500 dark:text-white dark:opacity-60 dark:group-hover:opacity-100 sm:h-5 sm:w-5"
           viewBox="0 0 20 20"
           fill="currentColor"
         >
@@ -33,7 +33,7 @@ export default function Menu() {
         {/* moon */}
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="absolute top-0 left-0 w-4 h-4 transition-opacity duration-500 text-slate-900 opacity-60 hover:opacity-100 dark:text-white dark:opacity-0 hover:dark:opacity-0 sm:h-5 sm:w-5"
+          className="absolute top-0 left-0 h-4 w-4 text-slate-900 opacity-60 transition-opacity duration-500 hover:opacity-100 dark:text-white dark:opacity-0 hover:dark:opacity-0 sm:h-5 sm:w-5"
           viewBox="0 0 20 20"
           fill="currentColor"
         >
@@ -45,7 +45,7 @@ export default function Menu() {
           width="20"
           height="20"
           fill="currentColor"
-          className="transition-opacity duration-500 text-slate-900 opacity-60 hover:opacity-100 dark:text-white"
+          className="text-slate-900 opacity-60 transition-opacity duration-500 hover:opacity-100 dark:text-white"
         >
           <path d="M6.29 18.251c7.547 0 11.675-6.253 11.675-11.675 0-.178 0-.355-.012-.53A8.348 8.348 0 0020 3.92a8.19 8.19 0 01-2.357.646 4.118 4.118 0 001.804-2.27 8.224 8.224 0 01-2.605.996 4.107 4.107 0 00-6.993 3.743 11.65 11.65 0 01-8.457-4.287 4.106 4.106 0 001.27 5.477A4.073 4.073 0 01.8 7.713v.052a4.105 4.105 0 003.292 4.022 4.095 4.095 0 01-1.853.07 4.108 4.108 0 003.834 2.85A8.233 8.233 0 010 16.407a11.616 11.616 0 006.29 1.84"></path>
         </svg>
@@ -54,7 +54,7 @@ export default function Menu() {
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="currentColor"
-          className="w-4 h-4 transition-opacity duration-500 text-slate-900 opacity-60 hover:opacity-100 dark:text-white sm:h-5 sm:w-5"
+          className="h-4 w-4 text-slate-900 opacity-60 transition-opacity duration-500 hover:opacity-100 dark:text-white sm:h-5 sm:w-5"
           viewBox="0 0 512 512"
         >
           <path d="M504 256C504 119 393 8 256 8S8 119 8 256c0 123.78 90.69 226.38 209.25 245V327.69h-63V256h63v-54.64c0-62.15 37-96.48 93.67-96.48 27.14 0 55.52 4.84 55.52 4.84v61h-31.28c-30.8 0-40.41 19.12-40.41 38.73V256h68.78l-11 71.69h-57.78V501C413.31 482.38 504 379.78 504 256z" />
@@ -63,7 +63,7 @@ export default function Menu() {
       <a title="Email us" href="mailto:theegonomistnz@gmail.com">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="w-4 h-4 transition-opacity duration-500 text-slate-900 opacity-60 hover:opacity-100 dark:text-white sm:h-5 sm:w-5"
+          className="h-4 w-4 text-slate-900 opacity-60 transition-opacity duration-500 hover:opacity-100 dark:text-white sm:h-5 sm:w-5"
           viewBox="0 0 20 20"
           fill="currentColor"
         >
@@ -77,7 +77,7 @@ export default function Menu() {
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="w-4 h-4 transition-opacity duration-500 text-slate-900 opacity-60 hover:opacity-100 dark:text-white sm:h-5 sm:w-5"
+          className="h-4 w-4 text-slate-900 opacity-60 transition-opacity duration-500 hover:opacity-100 dark:text-white sm:h-5 sm:w-5"
           viewBox="0 0 448 512"
           fill="currentColor"
         >
@@ -87,7 +87,7 @@ export default function Menu() {
       <a title="RSS" href="/rss">
         <svg
           xmlns="http://www.w3.org/2000/svg"
-          className="w-4 h-4 transition-opacity duration-500 text-slate-900 opacity-60 hover:opacity-100 dark:text-white sm:h-5 sm:w-5"
+          className="h-4 w-4 text-slate-900 opacity-60 transition-opacity duration-500 hover:opacity-100 dark:text-white sm:h-5 sm:w-5"
           viewBox="0 0 20 20"
           fill="currentColor"
         >
@@ -96,7 +96,14 @@ export default function Menu() {
         </svg>
       </a>
       <Link
-        className="text-sm transition-opacity duration-500 font-inter text-slate-900 opacity-60 hover:opacity-100 dark:text-white"
+        title="Colophon"
+        to="/colophon"
+        className="h-4 w-4 -translate-y-1 text-xl text-slate-900 opacity-60 transition-opacity duration-500 hover:opacity-100 dark:text-white sm:h-5 sm:w-5"
+      >
+        ❦
+      </Link>
+      <Link
+        className="font-inter text-sm text-slate-900 opacity-60 transition-opacity duration-500 hover:opacity-100 dark:text-white"
         to="/about"
       >
         About
