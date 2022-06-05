@@ -20,11 +20,8 @@ export const headers: HeadersFunction = () => {
 };
 
 export default function About() {
-  const { about } = useLoaderData<LoaderDataType>();
-
   return (
     <>
-      {/* <pre>** {JSON.stringify(about, null, 2)} **</pre> */}
       <div className="prose prose-sm prose-slate font-inter dark:prose-invert">
         <h1>Colophon ❦</h1>
         <p>
