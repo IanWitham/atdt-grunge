@@ -43,7 +43,8 @@ export default function About() {
           </span>
         </p>
         <p>
-          The fancy light-up sign is an SVG that Ian made, animated with CSS.
+          The fancy light-up sign is an SVG that Ian made in{" "}
+          <a href="https://inkscape.org/">InkScape</a> and animated with CSS.
           The light bulbs were hand positioned by himself using the finest
           artisanal numbers in a text editor.
         </p>
