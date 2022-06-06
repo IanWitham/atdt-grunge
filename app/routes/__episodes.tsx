@@ -30,7 +30,7 @@ export const loader: LoaderFunction = async ({ request, params }) => {
 
   return json(result, {
     headers: {
-      "Cache-Control": "public, max-age=3600",
+      "Cache-Control": "max-age=3600",
     },
   });
 };
@@ -74,7 +74,7 @@ export default function Index() {
   //from-blue-300 to-blue-500
   return (
     <>
-      <div className="fixed inset-0 bg-cover bg-sky dark:bg-gradient-to-t dark:from-slate-700 dark:via-slate-900 dark:to-black " />
+      <div className="fixed inset-0 bg-sky bg-cover dark:bg-gradient-to-t dark:from-slate-700 dark:via-slate-900 dark:to-black " />
       <div className="block mobile-landscape:hidden">
         <div className="hidden biggish-mobile:block">
           <MainLayout
