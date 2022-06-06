@@ -22,7 +22,7 @@ import clsx from "clsx";
 
 export const headers: HeadersFunction = () => {
   return {
-    "Cache-Control": "public, max-age=3600",
+    "Cache-Control": "public, max-age=1200",
   };
 };
 

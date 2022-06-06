@@ -1,4 +1,3 @@
-import { useLoaderData } from "@remix-run/react";
 import type {
   LoaderFunction,
   HeadersFunction,
