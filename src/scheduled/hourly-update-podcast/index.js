@@ -16,7 +16,7 @@ exports.handler = async function scheduled(event) {
   // get the previous data to check the last datetime updated
   const lastData = await db.podcast.get({ pk: "feed" });
 
-  const { data } = await axios.get("http://atthedrivethru.co.nz/rss");
+  const { data } = await axios.get("https://theegonomist.libsyn.com/rss");
   const podcast = podparse(data);
 
   if (
